@@ -48,7 +48,7 @@
   <div class="index">
     <div class="content">
       <transition-group name='hgn'>
-        <div v-for='(data,index) in list' :key='index' v-show='index===n'>
+        <div v-for='(data,index) in text_list' :key='index' v-show='index===n'>
           <!--v-show或v-if均可 主要是为了触发transition  控制n的变化 改变现实的内容-->
           {{data}}
         </div>
@@ -60,22 +60,28 @@
 
 <script>
 export default {
+  props: ['list'],
   data () {
     return {
       n: 0,
-      length_show: 0,
-      list: []
+      text_list: ['123', '456', '789'],
+      length_show: 0
     }
   },
   methods: {
     list_test () {
       setInterval(() => {
-        if (this.n === this.length_show - 1) {
+        if (this.n === this.text_list.length - 1) {
           this.n = 0
         } else {
           this.n++
         }
       }, 3000)
+    }
+  },
+  watch: {
+    list (val) {
+      this.text_list = val || this.text_list
     }
   },
   created: function () {
